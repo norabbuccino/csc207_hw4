@@ -54,8 +54,16 @@ public class Fraction
       }
     else
       {
-        this.num = num;
-        this.denom = denom;
+        if (denom.signum() == -1)
+          {
+            this.num = num.negate();
+            this.denom = denom.negate();
+          }
+        else
+          {
+            this.num = num;
+            this.denom = denom;
+          }
       }
   } // Fraction(BigInteger, BigInteger)
 
@@ -72,8 +80,16 @@ public class Fraction
       }
     else
       {
-        this.num = BigInteger.valueOf(num);
-        this.denom = BigInteger.valueOf(denom);
+        if (denom < 0)
+          {
+            this.num = BigInteger.valueOf(0 - num);
+            this.denom = BigInteger.valueOf(0 - denom);
+          }
+        else
+          {
+            this.num = BigInteger.valueOf(num);
+            this.denom = BigInteger.valueOf(denom);
+          }
       }
   } // Fraction(int, int)
 
@@ -93,13 +109,22 @@ public class Fraction
       } // if (denominator == 0)
     else
       {
-        this.num = BigInteger.valueOf(numerator);
-        this.denom = BigInteger.valueOf(denominator);
+        if (denominator < 0)
+          {
+            this.num = BigInteger.valueOf(0 - numerator);
+            this.denom = BigInteger.valueOf(0 - denominator);
+          }
+        else
+          {
+            this.num = BigInteger.valueOf(numerator);
+            this.denom = BigInteger.valueOf(denominator);
+          }
       } // else
   } // Fraction(String, String)
 
   /**
    * Build a new Fraction from a single String
+   * 
    * @param frac
    * @throws DivideByZeroException
    */
@@ -108,20 +133,37 @@ public class Fraction
     String[] fracArray = frac.split("/");
     int numerator = Integer.parseInt(fracArray[0]);
     int denominator = Integer.parseInt(fracArray[1]);
-    if(denominator == 0)
+    if (denominator == 0)
       {
         throw new DivideByZeroException("Denominator cannot be zero");
       }
     else
       {
-        this.num = BigInteger.valueOf(numerator);
-        this.denom = BigInteger.valueOf(denominator);
+        if (denominator < 0)
+          {
+            this.num = BigInteger.valueOf(0 - numerator);
+            this.denom = BigInteger.valueOf(0 - denominator);
+          }
+        else
+          {
+            this.num = BigInteger.valueOf(numerator);
+            this.denom = BigInteger.valueOf(denominator);
+          }
       }
   } // Fraction(String)
-  
+
   // +---------+------------------------------------------------------
   // | Methods |
   // +---------+
+
+  public void simplify()
+  {
+    BigInteger gcd = this.num.gcd(denom);
+
+    this.num = this.num.divide(gcd);
+    this.denom = this.denom.divide(gcd);
+
+  }
 
   /**
    * Express this fraction as a double.
@@ -149,9 +191,9 @@ public class Fraction
     // The numerator is more complicated
     resultNumerator =
         (this.num.multiply(addMe.denom)).add(addMe.num.multiply(this.denom));
-
-    // Return the computed value
-    return new Fraction(resultNumerator, resultDenominator);
+    Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+    resultFrac.simplify();
+    return resultFrac;
   }// add(Fraction)
 
   /**
@@ -181,8 +223,9 @@ public class Fraction
 
     resultNumerator = this.num.multiply(frac.num);
     resultDenominator = this.denom.multiply(frac.denom);
-
-    return new Fraction(resultNumerator, resultDenominator);
+    Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+    resultFrac.simplify();
+    return resultFrac;
   } // multiply(Fraction)
 
   /**
@@ -211,7 +254,9 @@ public class Fraction
     resultDenominator = this.denom.multiply(frac.denom);
     resultNumerator =
         (this.num.multiply(frac.denom)).subtract(frac.num.multiply(this.denom));
-    return new Fraction(resultNumerator, resultDenominator);
+    Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+    resultFrac.simplify();
+    return resultFrac;
   } // minus(Fraction)
 
   /**
@@ -241,7 +286,9 @@ public class Fraction
     resultDenominator = this.denom.multiply(frac.denom);
     resultNumerator =
         (frac.num.multiply(this.denom)).subtract(this.num.multiply(frac.denom));
-    return new Fraction(resultNumerator, resultDenominator);
+    Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+    resultFrac.simplify();
+    return resultFrac;
   } // subtractFrom(Fraction)
 
   /**
@@ -270,7 +317,9 @@ public class Fraction
     BigInteger resultDenominator;
     resultDenominator = this.denom.multiply(frac.num);
     resultNumerator = this.num.multiply(frac.denom);
-    return new Fraction(resultNumerator, resultDenominator);
+    Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+    resultFrac.simplify();
+    return resultFrac;
   }// divideBy(Fraction)
 
   /**
@@ -281,7 +330,7 @@ public class Fraction
   public Fraction divideBy(int val)
     throws Exception
   {
-    if(val == 0)
+    if (val == 0)
       {
         throw new DivideByZeroException("Cannot divide by 0");
       }
@@ -302,7 +351,9 @@ public class Fraction
     BigInteger resultDenominator;
     resultDenominator = this.num.multiply(frac.denom);
     resultNumerator = this.denom.multiply(frac.num);
-    return new Fraction(resultNumerator, resultDenominator);
+    Fraction resultFrac = new Fraction(resultNumerator, resultDenominator);
+    resultFrac.simplify();
+    return resultFrac;
   } // divideFrom(Fraction)
 
   /**
@@ -315,7 +366,9 @@ public class Fraction
   {
     BigInteger resultNumerator;
     resultNumerator = BigInteger.valueOf(val).multiply(this.denom);
-    return new Fraction(resultNumerator, this.num);
+    Fraction resultFrac = new Fraction(resultNumerator, this.num);
+    resultFrac.simplify();
+    return resultFrac;
   }// divideFrom(int)
 
   /**
@@ -330,15 +383,6 @@ public class Fraction
                         this.denom.multiply(this.denom));
   }
 
-  public void simplify()
-  {
-    BigInteger gcd = this.num.gcd(denom);
-
-    this.num = this.num.divide(gcd);
-    this.denom = this.denom.divide(gcd);
-
-  }
-  
   /**
    * Convert this fraction to a string for ease of printing.
    */
@@ -377,13 +421,14 @@ public class Fraction
   /**
    * Compare this fraction to another fraction. They are the same if they have
    * the same numerator and denominator.
-   * @throws Exception 
+   * 
+   * @throws Exception
    */
   public boolean equals(Fraction other)
   {
     this.simplify();
     other.simplify();
-    return(this.num.equals(other.num) && this.denom.equals(other.denom));
+    return (this.num.equals(other.num) && this.denom.equals(other.denom));
 
   } // equals(Fraction)
 
@@ -396,4 +441,15 @@ public class Fraction
   {
     return this.num.multiply(this.denom).intValue();
   } // hashCode()
+
+
+  // +----------+------------------------------------------------------
+  // | Mutators |
+  // +----------+
+  
+  public void negate()
+  {
+    this.num = this.num.negate();
+  }
+  
 } // class Fraction

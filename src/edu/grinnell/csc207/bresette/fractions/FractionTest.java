@@ -2,11 +2,27 @@ package edu.grinnell.csc207.bresette.fractions;
 
 import static org.junit.Assert.*;
 
+import java.math.BigInteger;
+
 import org.junit.Test;
 
 public class FractionTest
 {
-
+  @Test
+  public void conversionTest()
+  throws Exception
+  {
+    Fraction frac = new Fraction(2, -3);
+    Fraction frac2 = new Fraction("2/-3");
+    Fraction frac3 = new Fraction("2", "-3");
+    Fraction frac4 = new Fraction(BigInteger.valueOf(2), BigInteger.valueOf(-3));
+    
+    assertEquals("Checking that numerator is now negative", new Fraction(-2, 3), frac);
+    assertEquals("Checking that numerator is now negative", new Fraction(-2, 3), frac2);
+    assertEquals("Checking that numerator is now negative", new Fraction(-2, 3), frac3);
+    assertEquals("Checking that numerator is now negative", new Fraction(-2, 3), frac4);
+  }
+  
   @Test
   public void addTest()
     throws Exception
