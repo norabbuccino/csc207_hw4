@@ -90,14 +90,35 @@ public class Fraction
     if (denominator == 0)
       {
         throw new DivideByZeroException("Denominator cannot be zero");
+      } // if (denominator == 0)
+    else
+      {
+        this.num = BigInteger.valueOf(numerator);
+        this.denom = BigInteger.valueOf(denominator);
+      } // else
+  } // Fraction(String, String)
+
+  /**
+   * Build a new Fraction from a single String
+   * @param frac
+   * @throws DivideByZeroException
+   */
+  public Fraction(String frac) throws DivideByZeroException
+  {
+    String[] fracArray = frac.split("/");
+    int numerator = Integer.parseInt(fracArray[0]);
+    int denominator = Integer.parseInt(fracArray[1]);
+    if(denominator == 0)
+      {
+        throw new DivideByZeroException("Denominator cannot be zero");
       }
     else
       {
         this.num = BigInteger.valueOf(numerator);
         this.denom = BigInteger.valueOf(denominator);
       }
-  } // Fraction(String, String)
-
+  } // Fraction(String)
+  
   // +---------+------------------------------------------------------
   // | Methods |
   // +---------+
