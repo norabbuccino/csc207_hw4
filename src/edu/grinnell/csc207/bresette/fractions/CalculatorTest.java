@@ -52,6 +52,11 @@ public class CalculatorTest
     
     assertArrayEquals("Testing expression with results", results, Calculator.evaluate(expression));
     
+    System.out.println(Calculator.evaluate("r0 = 1 + 2/3"));
+    System.out.println(Calculator.evaluate("r2 = 4 + 3"));
+    System.out.println(Calculator.evaluate("r3 = r2 - 1"));
+    System.out.println(Calculator.evaluate("r3 / 1/2"));
+    
   }
 
 }
