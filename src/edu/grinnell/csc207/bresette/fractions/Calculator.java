@@ -10,7 +10,7 @@ public class Calculator
     return frac.contains("/");
   }
 
-  public static String store( String expression)
+  public static String store(String expression)
     throws Exception
   {
     String[] splitArray = new String[2];
@@ -19,7 +19,7 @@ public class Calculator
   }
 
   static String[] r = new String[8];
-  
+
   /**
    * preconditions: expression must have a space between the values and the
    * operators
@@ -28,23 +28,23 @@ public class Calculator
    * @return
    * @throws Exception
    */
- 
+
   public static String evaluate(String expression)
     throws Exception
   {
-    
+
     String[] splitArray = new String[2];
     Fraction frac1;
     Fraction frac2;
-    
+
     int intResult;
     String result = "";
-    //r[1]="5";
     if (expression.contains(" = "))
       {
         r[Character.getNumericValue(expression.charAt(1))] = store(expression);
         result = r[Character.getNumericValue(expression.charAt(1))];
-      }
+      } // if (expression.contains(" = "))
+
     else if (expression.contains(" + "))
       {
         splitArray = expression.split(" \\+ ");
@@ -53,18 +53,18 @@ public class Calculator
             if (isFraction(splitArray[1]))
               {
                 frac2 = new Fraction(splitArray[1]);
-                frac2 = frac2.add(Integer.parseInt(r[splitArray[0].indexOf("r") + 1]));
+                frac2 =
+                    frac2.add(Integer.parseInt(r[splitArray[0].indexOf("r") + 1]));
                 result = frac2.toString();
-              }
+              } // (isFraction(splitArray[1]))
             else
               {
-                //string that is stored in r[]
-                //then convert to an int
-                //splitArray[0]
-                intResult = Integer.parseInt(splitArray[1]) + Integer.parseInt(r[Character.getNumericValue(splitArray[0].charAt(1))]);
+                intResult =
+                    Integer.parseInt(splitArray[1])
+                        + Integer.parseInt(r[Character.getNumericValue(splitArray[0].charAt(1))]);
                 result = Integer.toString(intResult);
-              }
-          }
+              } // else
+          } // (splitArray[0].contains("r"))
 
         else if (isFraction(splitArray[0]))
           {
@@ -74,27 +74,27 @@ public class Calculator
               {
                 frac2 = new Fraction(splitArray[1]);
                 frac1 = frac1.add(frac2);
-              }
+              } // (isFraction(splitArray[1]))
             else
               {
                 frac1 = frac1.add(Integer.parseInt(splitArray[1]));
-              }
+              } // else
             result = frac1.toString();
-          }
-        else if (splitArray[1].contains("/"))
+          } // else if (isFraction(splitArray[0]))
+        else if (isFraction(splitArray[1]))
           {
             frac2 = new Fraction(splitArray[1]);
             frac2 = frac2.add(Integer.parseInt(splitArray[0]));
             result = frac2.toString();
-          }
+          } // else if (isFraction(splitArray[1]))
         else
           {
             intResult =
                 Integer.parseInt(splitArray[0])
                     + Integer.parseInt(splitArray[1]);
             result = Integer.toString(intResult);
-          }
-      }
+          } // else
+      } // else if (expression.contains(" + "))
 
     else if (expression.contains(" - "))
       {
@@ -103,63 +103,65 @@ public class Calculator
           {
             frac1 = new Fraction(splitArray[0]);
 
-            if (splitArray[1].contains("/"))
+            if (isFraction(splitArray[1]))
               {
                 frac2 = new Fraction(splitArray[1]);
                 frac1 = frac1.minus(frac2);
-              }
+              } // if (isFraction(splitArray[1]))
             else
               {
                 frac1 = frac1.minus(Integer.parseInt(splitArray[1]));
-              }
+              } // else
             result = frac1.toString();
-          }
-        else if (splitArray[1].contains("/"))
+          } // if (splitArray[0].contains("/"))
+        else if (isFraction(splitArray[1]))
           {
             frac2 = new Fraction(splitArray[1]);
             frac2 = frac2.subtractFrom(Integer.parseInt(splitArray[0]));
             result = frac2.toString();
-          }
+          } // else if (isFraction(splitArray[1]))
         else
           {
             intResult =
                 Integer.parseInt(splitArray[0])
                     - Integer.parseInt(splitArray[1]);
             result = Integer.toString(intResult);
-          }
-      }
+          } // else
+      } // else if (expression.contains(" - "))
+
     else if (expression.contains(" * "))
       {
         splitArray = expression.split(" \\* ");
-        if (splitArray[0].contains("/"))
+        if (isFraction(splitArray[0]))
           {
             frac1 = new Fraction(splitArray[0]);
 
-            if (splitArray[1].contains("/"))
+            if (isFraction(splitArray[1]))
               {
                 frac2 = new Fraction(splitArray[1]);
                 frac1 = frac1.multiply(frac2);
-              }
+              } // if (isFraction(splitArray[1]))
             else
               {
                 frac1 = frac1.multiply(Integer.parseInt(splitArray[1]));
-              }
+              } // else
             result = frac1.toString();
-          }
-        else if (splitArray[1].contains("/"))
+          } // if (isFraction(splitArray[0]))
+        else if (isFraction(splitArray[1]))
           {
             frac2 = new Fraction(splitArray[1]);
             frac2 = frac2.multiply(Integer.parseInt(splitArray[0]));
             result = frac2.toString();
-          }
+          } // else if (isFraction(splitArray[1]))
         else
           {
             intResult =
                 Integer.parseInt(splitArray[0])
                     * Integer.parseInt(splitArray[1]);
             result = Integer.toString(intResult);
-          }
-      }
+          } // else
+      } // else if (expression.contains(" * "))
+
     else if (expression.contains(" / "))
       {
         splitArray = expression.split(" / ");
@@ -170,49 +172,48 @@ public class Calculator
               {
                 frac2 = new Fraction(splitArray[1]);
                 frac1 = frac1.divideBy(frac2);
-              }
+              } // if (isFraction(splitArray[1]))
             else
               {
                 frac1 = frac1.divideBy(Integer.parseInt(splitArray[1]));
-              }
+              } // else
             result = frac1.toString();
-          }
+          } // if (isFraction(splitArray[0]))
         else if (isFraction(splitArray[1]))
           {
             frac2 = new Fraction(splitArray[1]);
             frac2 = frac2.divideFrom(Integer.parseInt(splitArray[0]));
             result = frac2.toString();
-          }
+          } // else if (isFraction(splitArray[1]))
         else
           {
             intResult =
                 Integer.parseInt(splitArray[0])
                     / Integer.parseInt(splitArray[1]);
             result = Integer.toString(intResult);
-          }
-
-      }
+          } // else
+      } // else if (expression.contains(" / "))
 
     else if (expression.contains("-"))
       {
-        if (expression.contains("/"))
+        if (isFraction(expression))
           {
             Fraction frac = new Fraction(expression.replaceFirst("-", ""));
             frac.negate();
             result = frac.toString();
-          }
+          } // if (isFraction(expression))
         else
           {
             intResult = 0 - Integer.parseInt(expression.replaceFirst("-", ""));
             result = Integer.toString(intResult);
-          }
-      }
+          } // else
+      } // else if (expression.contains("-"))
     else
       {
         result = "Invalid input";
-      }
+      } // else
     return result;
-  }
+  } // evaluate(String)
 
   public static String[] evaluate(String[] expression)
     throws Exception
