@@ -51,6 +51,7 @@ public class CalculatorTest
     results[4] = "1/3";
     
     assertArrayEquals("Testing expression with results", results, Calculator.evaluate(expression));
+    
   }
 
 }
