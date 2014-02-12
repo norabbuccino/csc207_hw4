@@ -29,8 +29,8 @@ public class CalculatorInterface
                   if (input.charAt(i) == ',')
                     {
                       numberOfCommas++;
-                    }
-                }
+                    } // if (input.charAt(i) == ',') locating commas
+                } // for (int i = 0; i < input.length(); i++) counting the number of commas
               String[] inputArray = new String[numberOfCommas + 1];
               String[] resultsArray = new String[numberOfCommas + 1];
               inputArray = input.split(", ");
@@ -38,17 +38,17 @@ public class CalculatorInterface
               for (int i = 0; i < resultsArray.length - 1; i++)
                 {
                   pen.print(resultsArray[i] + ", ");
-                }
+                } // for (int i = 0; i < resultsArray.length - 1; i++) printing out the values
               pen.print(resultsArray[resultsArray.length - 1]);
               pen.flush();
-            }
+            } // if (input.contains(", ")) input is a list of expressions
           else
             {
               pen.println(Calculator.evaluate(input));
-            }
-        }
+            } // else input is not a list of expressions
+        } // while (!input.equalsIgnoreCase("q")) infinite loop until user chooses to quit
       pen.close();
 
-    }
+    } // main()
 
-}
+} // class CalculatorInterface()

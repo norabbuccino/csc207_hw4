@@ -197,7 +197,7 @@ public class Calculator
     else if (expression.contains(" + "))
       {
         splitArray = expression.split(" \\+ ");
-        if (splitArray[0].contains("r"))
+        if (splitArray[0].contains("r") || splitArray[1].contains("r"))
           {
             result = findR(splitArray, '+', frac2);
           } // if (splitArray[0].contains("r"))
