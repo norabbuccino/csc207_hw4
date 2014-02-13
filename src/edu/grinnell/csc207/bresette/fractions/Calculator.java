@@ -2,12 +2,23 @@ package edu.grinnell.csc207.bresette.fractions;
 
 public class Calculator
 {
-
+  /**
+   * Determines whether a given string can be made into a fraction.
+   * 
+   * @param frac
+   */
   public static boolean isFraction(String frac)
   {
     return frac.contains("/");
   } // isFraction(String frac)
 
+  /**
+   * A method to help store the value of the expression that is evaluated in the
+   * evaluate method.
+   * 
+   * @param expression
+   * @throws Exception
+   */
   public static String store(String expression)
     throws Exception
   {
@@ -23,8 +34,16 @@ public class Calculator
       } // else
   } // store(String)
 
-  public static String operateFraction(Fraction frac2, String[] array,
-                                       char operator)
+  /**
+   * Determines the value of the expression if it does not contain a storage
+   * variable.
+   * 
+   * @param frac2
+   * @param array
+   * @param operator
+   * @throws Exception
+   */
+  public static String operate(Fraction frac2, String[] array, char operator)
     throws Exception
   {
     if (isFraction(array[0]))
@@ -83,16 +102,24 @@ public class Calculator
 
         return Integer.toString(intResult);
       } // else
-  } // operateFraction(Fraction frac2, String[] array, char operator)
+  } // operation(Fraction frac2, String[] array, char operator)
 
-  public static String findR(String[] array, char operator, Fraction frac)
+  /**
+   * Computes the value produced from the operation between the storage variable
+   * 'r' and another element.
+   * 
+   * @param array
+   * @param operator
+   * @param frac
+   * @throws Exception
+   */
+  public static String computeR(String[] array, char operator, Fraction frac)
     throws Exception
   {
     int intResult = 0;
     if (isFraction(array[1]))
       {
-        frac = new Fraction(array[1]); // what if r is a fraction and you add
-                                       // something to it?
+        frac = new Fraction(array[1]);
         Fraction returnFrac = new Fraction("1/1");
 
         if (isFraction(r[Character.getNumericValue(array[0].charAt(1))]))
@@ -169,22 +196,25 @@ public class Calculator
   static String[] r = new String[8];
 
   /**
-   * 
    * Evaluates the given mathematical expression. Supports the operators '=',
    * '+', '-', '*', and '/'. It also supports storage of up to 8 numbers.
    * 
-   * preconditions: The expression must contain only Fractions or integers. The
-   * expression must have a space between the values and the operators (ex.
-   * "1 + 2"). Stored variables must consist of 'r' and the desired storage
-   * number between 0 and 7 (ex. "r3"). If a stored variable is used in an
-   * equation, it must not be in the position after any operator other than '='
-   * (ex. "r1 = r0 + 1").
+   * @Preconditions The expression must contain only Fractions or integers. The
+   *                expression must have a space between the values and the
+   *                operators (ex. "1 + 2"). Stored variables must consist of
+   *                'r' and the desired storage number between 0 and 7 (ex.
+   *                "r3"). If a stored variable is used in an equation, it must
+   *                not be in the position after any operator other than '='
+   *                (ex. "r1 = r0 + 1") not "r1 = 1 + r0").
+   * 
+   * @Postconditions The given expression will be evaluated and if a storage
+   *                 variable is given, it will store the evaluation at that
+   *                 location.
    * 
    * @param expression
    * @return
    * @throws Exception
    */
-
   public static String evaluate(String expression)
     throws Exception
   {
@@ -205,11 +235,11 @@ public class Calculator
         splitArray = expression.split(" \\+ ");
         if (splitArray[0].contains("r") || splitArray[1].contains("r"))
           {
-            result = findR(splitArray, '+', frac2);
+            result = computeR(splitArray, '+', frac2);
           } // if (splitArray[0].contains("r"))
         else
           {
-            result = operateFraction(frac2, splitArray, '+');
+            result = operate(frac2, splitArray, '+');
           } // else
       } // else if (expression.contains(" + "))
 
@@ -218,11 +248,11 @@ public class Calculator
         splitArray = expression.split(" - ");
         if (splitArray[0].contains("r"))
           {
-            result = findR(splitArray, '-', frac2);
+            result = computeR(splitArray, '-', frac2);
           } // if (splitArray[0].contains("r"))
         else
           {
-            result = operateFraction(frac2, splitArray, '-');
+            result = operate(frac2, splitArray, '-');
           } // else
       } // else if (expression.contains(" - "))
 
@@ -231,11 +261,11 @@ public class Calculator
         splitArray = expression.split(" \\* ");
         if (splitArray[0].contains("r"))
           {
-            result = findR(splitArray, '*', frac2);
+            result = computeR(splitArray, '*', frac2);
           } // if (splitArray[0].contains("r"))
         else
           {
-            result = operateFraction(frac2, splitArray, '*');
+            result = operate(frac2, splitArray, '*');
           } // else
       } // else if (expression.contains(" * "))
 
@@ -244,11 +274,11 @@ public class Calculator
         splitArray = expression.split(" / ");
         if (splitArray[0].contains("r"))
           {
-            result = findR(splitArray, '/', frac2);
+            result = computeR(splitArray, '/', frac2);
           } // if (splitArray[0].contains("r"))
         else
           {
-            result = operateFraction(frac2, splitArray, '/');
+            result = operate(frac2, splitArray, '/');
           } // else
       } // else if (expression.contains(" / "))
 
