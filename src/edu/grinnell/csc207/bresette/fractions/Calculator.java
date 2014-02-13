@@ -6,7 +6,7 @@ public class Calculator
   public static boolean isFraction(String frac)
   {
     return frac.contains("/");
-  }
+  } // isFraction(String frac)
 
   public static String store(String expression)
     throws Exception
@@ -16,12 +16,12 @@ public class Calculator
     if (!splitArray[1].contains(" "))
       {
         return splitArray[1];
-      }
+      } // if (!splitArray[1].contains(" "))
     else
       {
         return evaluate(splitArray[1]);
-      }
-  }
+      } // else
+  } // store(String)
 
   public static String operateFraction(Fraction frac2, String[] array,
                                        char operator)
@@ -83,7 +83,7 @@ public class Calculator
 
         return Integer.toString(intResult);
       } // else
-  }
+  } // operateFraction(Fraction frac2, String[] array, char operator)
 
   public static String findR(String[] array, char operator, Fraction frac)
     throws Exception
@@ -93,7 +93,6 @@ public class Calculator
       {
         frac = new Fraction(array[1]); // what if r is a fraction and you add
                                        // something to it?
-
         Fraction returnFrac = new Fraction("1/1");
 
         if (isFraction(r[Character.getNumericValue(array[0].charAt(1))]))
@@ -108,7 +107,7 @@ public class Calculator
               returnFrac = rFrac.multiply(frac);
             else if (operator == '/')
               returnFrac = rFrac.divideBy(frac);
-          }
+          } // if (isFraction(r[Character.getNumericValue(array[0].charAt(1))]))
         else
           {
             if (operator == '+')
@@ -123,10 +122,9 @@ public class Calculator
             else if (operator == '/')
               returnFrac =
                   frac.divideFrom(Integer.parseInt(r[Character.getNumericValue(array[0].charAt(1))]));
-          }
+          } // else
         return returnFrac.toString();
-
-      } // (isFraction(splitArray[1]))
+      } // if (isFraction(array[1]))
     else
       {
         String result = "";
@@ -143,7 +141,7 @@ public class Calculator
             else if (operator == '/')
               rFrac = rFrac.divideBy(Integer.parseInt(array[1]));
             result = rFrac.toString();
-          }
+          } // if (isFraction(r[Character.getNumericValue(array[0].charAt(1))]))
         else
           {
             if (operator == '+')
@@ -163,7 +161,7 @@ public class Calculator
                   Integer.parseInt(r[Character.getNumericValue(array[0].charAt(1))])
                       / Integer.parseInt(array[1]);
             result = Integer.toString(intResult);
-          }
+          } // else
         return result;
       } // else
   }
@@ -171,8 +169,16 @@ public class Calculator
   static String[] r = new String[8];
 
   /**
-   * preconditions: expression must have a space between the values and the
-   * operators
+   * 
+   * Evaluates the given mathematical expression. Supports the operators '=',
+   * '+', '-', '*', and '/'. It also supports storage of up to 8 numbers.
+   * 
+   * preconditions: The expression must contain only Fractions or integers. The
+   * expression must have a space between the values and the operators (ex.
+   * "1 + 2"). Stored variables must consist of 'r' and the desired storage
+   * number between 0 and 7 (ex. "r3"). If a stored variable is used in an
+   * equation, it must not be in the position after any operator other than '='
+   * (ex. "r1 = r0 + 1").
    * 
    * @param expression
    * @return
@@ -263,7 +269,7 @@ public class Calculator
     else if (expression.equalsIgnoreCase("q"))
       {
         result = "Program terminated";
-      }
+      } // else if (expression.equalsIgnoreCase("q"))
     else
       {
         result = "Invalid expression, please try again";
@@ -278,8 +284,8 @@ public class Calculator
     for (int i = 0; i < expression.length; i++)
       {
         result[i] = evaluate(expression[i]);
-      }
+      } // for (i)
     return result;
-  }
+  } // evaluate(String[])
 
-}
+} // class Calculator
