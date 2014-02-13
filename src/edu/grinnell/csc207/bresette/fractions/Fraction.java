@@ -8,7 +8,7 @@ import java.math.BigInteger;
  * A simple implementation of Fractions.
  * 
  * @author Samuel A. Rebelsky
- * @author YOUR NAME HERE
+ * @author Nora Bresette Buccino and Erin Callaway
  * @author CSC152 2005S
  * @version 1.0 of February 2005
  */
@@ -42,54 +42,69 @@ public class Fraction
   // +--------------+
 
   /**
-   * Build a new fraction with numerator num and denominator denom.
+   * Build a new fraction with numerator num and denominator denom. Where num
+   * and denom are BigIntegers
    * 
-   * Warning! Not yet stable.
+   * @param num
+   *          a BigInteger
+   * @param a
+   *          BigInteger
+   * @throws DivideByZeroException
+   * @pre num and denom must be BigIntegers
+   * @post returns a Fraction with numerator num and denominator denom
    */
-  public Fraction(BigInteger num, BigInteger denom) throws Exception
+  public Fraction(BigInteger num, BigInteger denom)
+                                                   throws DivideByZeroException
   {
     if (denom.equals(0))
       {
         throw new DivideByZeroException("Denominator cannot be zero");
-      }
+      } // if (denom.equals(0)) testing if the denominator is 0
     else
       {
         if (denom.signum() == -1)
           {
             this.num = num.negate();
             this.denom = denom.negate();
-          }
+          } // if (denom.signum() == -1) testing if the denominator is negative
         else
           {
             this.num = num;
             this.denom = denom;
-          }
-      }
+          }// else
+      } // else
   } // Fraction(BigInteger, BigInteger)
 
   /**
-   * Build a new fraction with numerator num and denominator denom.
+   * Build a new fraction with numerator num and denominator denom. Where num
+   * and denom are ints
    * 
-   * Warning! Not yet stable.
+   * @param num
+   *          an int
+   * @param denom
+   *          an int
+   * @throws DivideByZeroException
+   * @pre both num and denom must be ints
+   * @post returns a Fraction with numerator num and denominator denom
    */
-  public Fraction(int num, int denom) throws Exception
+  public Fraction(int num, int denom) throws DivideByZeroException
   {
     if (denom == 0)
       {
         throw new DivideByZeroException("Denominator cannot be zero");
-      }
+      } // if (denom == 0) testing if the denominator is zero
     else
       {
         if (denom < 0)
           {
             this.num = BigInteger.valueOf(0 - num);
             this.denom = BigInteger.valueOf(0 - denom);
-          }
+          } // if (denom < 0) testing if the denominator is negative
         else
           {
             this.num = BigInteger.valueOf(num);
             this.denom = BigInteger.valueOf(denom);
-          }
+          } // else
       }
   } // Fraction(int, int)
 
@@ -97,7 +112,13 @@ public class Fraction
    * Build a new Fraction from String values for the numerator and the
    * denominator
    * 
+   * @param num
+   *          a String
+   * @param denom
+   *          a String
    * @throws DivideByZeroException
+   * @pre num and denom must be Strings that contain integers
+   * @post returns a new Fraction with numerator num and denominator denom
    */
   public Fraction(String num, String denom) throws DivideByZeroException
   {
@@ -113,12 +134,12 @@ public class Fraction
           {
             this.num = BigInteger.valueOf(0 - numerator);
             this.denom = BigInteger.valueOf(0 - denominator);
-          }
+          } // if (denominator < 0) testing if the denominator is negative
         else
           {
             this.num = BigInteger.valueOf(numerator);
             this.denom = BigInteger.valueOf(denominator);
-          }
+          } // else
       } // else
   } // Fraction(String, String)
 
@@ -126,7 +147,13 @@ public class Fraction
    * Build a new Fraction from a single String
    * 
    * @param frac
+   *          a String
    * @throws DivideByZeroException
+   * @pre frac must be a String that contains an integer followed by a /
+   *      followed by another integer. There should not be any spaces between
+   *      the numbers and the slash.
+   * @post returns a Fraction with numerator as the integer before the slash and
+   *       the denominator as the integer after the slash.
    */
   public Fraction(String frac) throws DivideByZeroException
   {
@@ -136,34 +163,25 @@ public class Fraction
     if (denominator == 0)
       {
         throw new DivideByZeroException("Denominator cannot be zero");
-      }
+      } // if (denominator == 0)
     else
       {
         if (denominator < 0)
           {
             this.num = BigInteger.valueOf(0 - numerator);
             this.denom = BigInteger.valueOf(0 - denominator);
-          }
+          } // if (denominator < 0)
         else
           {
             this.num = BigInteger.valueOf(numerator);
             this.denom = BigInteger.valueOf(denominator);
-          }
+          } // else
       }
   } // Fraction(String)
 
   // +---------+------------------------------------------------------
   // | Methods |
   // +---------+
-
-  public void simplify()
-  {
-    BigInteger gcd = this.num.gcd(denom);
-
-    this.num = this.num.divide(gcd);
-    this.denom = this.denom.divide(gcd);
-
-  }
 
   /**
    * Express this fraction as a double.
@@ -176,7 +194,12 @@ public class Fraction
   /**
    * Add the fraction other to this fraction.
    * 
+   * @param addMe
+   *          a Fraction
+   * @return a new Fraction
    * @throws Exception
+   * @pre addMe must be a fraction
+   * @post returns a new Fraction of the sum of the two fractions
    */
   public Fraction add(Fraction addMe)
     throws Exception
@@ -199,7 +222,12 @@ public class Fraction
   /**
    * Add an integer to this fraction.
    * 
+   * @param val
+   *          an int
+   * @return a new Fraction
    * @throws Exception
+   * @pre val must be an int
+   * @post returns a new Fraction of the sum of the fraction and the int
    */
   public Fraction add(int val)
     throws Exception
@@ -213,7 +241,12 @@ public class Fraction
   /**
    * Multiply the fraction with another fraction
    * 
+   * @param frac
+   *          a Fraction
+   * @return a new Fraction
    * @throws Exception
+   * @pre frac must be a fraction
+   * @post returns the product of the two fractions
    */
   public Fraction multiply(Fraction frac)
     throws Exception
@@ -231,7 +264,12 @@ public class Fraction
   /**
    * Multiply the fraction with an integer
    * 
+   * @param val
+   *          an int
+   * @return a new Fraction
    * @throws Exception
+   * @pre val must be an int
+   * @post returns a new Fraction of the product of the fraction and val
    */
   public Fraction multiply(int val)
     throws Exception
@@ -244,7 +282,13 @@ public class Fraction
   /**
    * Subtract a fraction from this fraction
    * 
+   * @param frac
+   *          a Fraction
+   * @return a new Fraction
    * @throws Exception
+   * @pre frac must be a fraction and it must be the value that is being
+   *      subtracted.
+   * @post returns the difference between the two fractions
    */
   public Fraction minus(Fraction frac)
     throws Exception
@@ -262,7 +306,14 @@ public class Fraction
   /**
    * Subtract an integer from this fraction
    * 
+   * @param val
+   *          an int
+   * @return a new Fraction
    * @throws Exception
+   * @pre val must be an int. it also must be the value that is being
+   *      subtracted.
+   * @post returns a new Fraction with the difference between the fraction and
+   *       the value
    */
   public Fraction minus(int val)
     throws Exception
@@ -276,7 +327,14 @@ public class Fraction
   /**
    * Subtract this fraction from a fraction
    * 
+   * @param frac
+   *          a Fraction
+   * @return a new Fraction
    * @throws Exception
+   * @pre frac must be a fraction and it must be the value that is being
+   *      subtracted from.
+   * @post returns a new fraction of the difference between a fraction and this
+   *       fraction
    */
   public Fraction subtractFrom(Fraction frac)
     throws Exception
@@ -294,7 +352,14 @@ public class Fraction
   /**
    * Subtract this fraction from an integer
    * 
+   * @param val
+   *          an int
+   * @return a new Fraction
    * @throws Exception
+   * @pre val must be an int and it must be the value that is being subtracted
+   *      from.
+   * @post returns a new Fraction of the difference between val and the
+   *       fraction.
    */
   public Fraction subtractFrom(int val)
     throws Exception
@@ -308,7 +373,12 @@ public class Fraction
   /**
    * Divide this fraction by a fraction.
    * 
+   * @param frac
+   *          a Fraction
+   * @return a new Fraction
    * @throws Exception
+   * @pre frac must be a fraction and it must be the divisor
+   * @post returns a new fraction of the quotient of the fractions
    */
   public Fraction divideBy(Fraction frac)
     throws Exception
@@ -325,7 +395,13 @@ public class Fraction
   /**
    * Divide this fraction by an integer.
    * 
+   * @param val
+   *          an int
+   * @return a new Fraction
    * @throws Exception
+   * @pre val must be an int and it must be the divisor
+   * @post returns a new Fraction of the quotient of the fraction divided by the
+   *       int
    */
   public Fraction divideBy(int val)
     throws Exception
@@ -342,7 +418,12 @@ public class Fraction
   /**
    * Divide a fraction by this fraction.
    * 
+   * @param frac
+   *          a Fraction
+   * @return a new Fraction
    * @throws Exception
+   * @pre frac must be a Fraction and must be the dividend
+   * @post returns a new Fraction of the quotient of the two fractions
    */
   public Fraction divideFrom(Fraction frac)
     throws Exception
@@ -359,7 +440,13 @@ public class Fraction
   /**
    * Divide an integer by this fraction.
    * 
+   * @param val
+   *          an int
+   * @return a new Fraction
    * @throws Exception
+   * @pre val must be an int and it must be the dividend
+   * @post returns a new Fraction of the quotient of val divided by the
+   *       fractions
    */
   public Fraction divideFrom(int val)
     throws Exception
@@ -374,6 +461,7 @@ public class Fraction
   /**
    * Square this fraction
    * 
+   * @return a new Fraction
    * @throws Exception
    */
   public Fraction square()
@@ -385,6 +473,9 @@ public class Fraction
 
   /**
    * Convert this fraction to a string for ease of printing.
+   * 
+   * @return a String with the fraction written as the numerator, a slash, and
+   *         the denominator
    */
   public String toString()
   {
@@ -433,6 +524,7 @@ public class Fraction
   } // equals(Fraction)
 
   // hashCode() method adapted from reading on standard object methods
+
   /**
    * define the hashCode for Fractions as the product of the numerator and
    * denominator
@@ -442,14 +534,28 @@ public class Fraction
     return this.num.multiply(this.denom).intValue();
   } // hashCode()
 
-
   // +----------+------------------------------------------------------
   // | Mutators |
   // +----------+
-  
+
+  /**
+   * Simplifies a fraction
+   */
+  public void simplify()
+  {
+    BigInteger gcd = this.num.gcd(denom);
+
+    this.num = this.num.divide(gcd);
+    this.denom = this.denom.divide(gcd);
+
+  } // simplify()
+
+  /**
+   * negates a fraction
+   */
   public void negate()
   {
     this.num = this.num.negate();
-  }
-  
+  } // negate()
+
 } // class Fraction

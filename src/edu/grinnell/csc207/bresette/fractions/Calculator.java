@@ -3,6 +3,15 @@ package edu.grinnell.csc207.bresette.fractions;
 public class Calculator
 {
 
+  /**
+   * Given a String, test if the String is a fraction
+   * 
+   * @param frac
+   *          a String
+   * @return either true or false depending on if frac contains a /
+   * @pre frac must be a string
+   * @post returns a boolean
+   */
   public static boolean isFraction(String frac)
   {
     return frac.contains("/");
@@ -23,6 +32,22 @@ public class Calculator
       } // else
   } // store(String)
 
+  /**
+   * Does all of the operations required by the calculator using fractions
+   * 
+   * @param frac2
+   *          a Fraction
+   * @param array
+   *          a String Array
+   * @param operator
+   *          a char
+   * @return a String
+   * @throws Exception
+   * @pre frac must be a fraction, array must be a string array, and operator
+   *      must be one of the following chars: +, -, *, /
+   * @post the result is a String which is the result of the given operation on
+   *       the fraction.
+   */
   public static String operateFraction(Fraction frac2, String[] array,
                                        char operator)
     throws Exception
@@ -85,6 +110,22 @@ public class Calculator
       } // else
   } // operateFraction(Fraction frac2, String[] array, char operator)
 
+  /**
+   * This method does all of the calculator operations when using storage units
+   * of r
+   * 
+   * @param array
+   *          a String array
+   * @param operator
+   *          a char
+   * @param frac
+   *          a Fraction
+   * @return a String
+   * @throws Exception
+   * @pre array must be an array of strings, operator must be one of the
+   *      following chars: +, -, *, /. Frac must be a fraction
+   * 
+   */
   public static String findR(String[] array, char operator, Fraction frac)
     throws Exception
   {
