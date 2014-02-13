@@ -307,6 +307,16 @@ public class Calculator
     return result;
   } // evaluate(String)
 
+  /**
+   * Evaluates a series of expressions and returns an array of those values.
+   * 
+   * @Preconditions Must conform to the preconditions of evaluate(String).
+   * @Postconditions An array is returned with the result of the expressions
+   *                 located at the same index as the array the expression was
+   *                 taken from.
+   * @param expression
+   * @throws Exception
+   */
   public static String[] evaluate(String[] expression)
     throws Exception
   {
